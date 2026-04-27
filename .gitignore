@@ -62,6 +62,8 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+docs/plan_eda.md
+reports/reporte_entrega1.md
 
 # Translations
 *.mo

@@ -1,73 +1,129 @@
-import os
-import requests
-import json
+"""
+Pipeline de descarga de datos. Resultados Saber 11 (ICFES).
+
+Descarga por lotes desde la API SODA2 de datos.gov.co,
+con reintentos por lote y soporte para retomar descargas interrumpidas.
+Almacena cada lote en formato Parquet.
+"""
+
+import io
 import time
+from pathlib import Path
 
-def descargar_todos_los_datos(carpeta_destino, nombre_archivo="saber11_raw.json"):
-    if not os.path.exists(carpeta_destino):
-        os.makedirs(carpeta_destino)
+import polars as pl
+import requests
+from loguru import logger
 
-    ruta_completa = os.path.join(carpeta_destino, nombre_archivo)
-    url_base = "https://www.datos.gov.co/resource/kgxf-xxbe.json"
-    
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
-        "Accept": "application/json"
-    }
 
-    limite = 50000
-    offset = 0
-    todos_los_datos = []
+URL_BASE = "https://www.datos.gov.co/resource/kgxf-xxbe.json"
+LIMIT = 50_000
+MAX_ATTEMPTS = 3
+OUTPUT_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
 
-    print("🚀 Iniciando descarga masiva con sistema de reintentos (Anti-Caídas)...")
+
+def get_data_batch(
+    batch_number: int,
+    url_base: str,
+    limit: int,
+    offset: int,
+    max_attempts: int = MAX_ATTEMPTS,
+) -> pl.DataFrame:
+    """
+    Descarga un lote de datos con reintentos y backoff exponencial.
+
+    Args:
+        batch_number: Numero de lote (para logging).
+        url_base: URL base de la API sin parametros.
+        limit: Cantidad de registros por lote.
+        offset: Desplazamiento desde el inicio del dataset.
+        max_attempts: Numero maximo de reintentos por lote.
+
+    Returns:
+        DataFrame con los datos del lote, o DataFrame vacio si no hay mas datos
+        o si todos los intentos fallaron.
+    """
+    logger.info(f"Se definieron {max_attempts} intentos para este lote...")
+
+    for attempt in range(max_attempts):
+        try:
+            url = f"{url_base}?$limit={limit}&$offset={offset}"
+            response = requests.get(url, timeout=60)
+            response.raise_for_status()
+
+            batch = pl.read_json(io.StringIO(response.text))
+
+            if batch.is_empty():
+                logger.info("Descarga completa")
+                return pl.DataFrame()
+
+            logger.info(
+                f"Lote {batch_number:04d} | offset {offset:>8} | {batch.shape} dimensiones"
+            )
+            return batch
+
+        except Exception as e:
+            logger.info(f"Intento {attempt + 1} fallo. Error: {str(e)}")
+            time.sleep(2 ** attempt)
+
+    logger.warning(f"Lote fallo tras {max_attempts} intentos. Abortando...")
+    return pl.DataFrame()
+
+
+def download_all(
+    url_base: str = URL_BASE,
+    limit: int = LIMIT,
+    output_dir: Path = OUTPUT_DIR,
+    max_attempts: int = MAX_ATTEMPTS,
+) -> None:
+    """
+    Descarga el dataset completo por lotes y los guarda en Parquet.
+
+    Soporta retomar descargas interrumpidas: detecta los lotes ya descargados
+    y continua desde el ultimo. Verifica que el ultimo lote no este corrupto.
+
+    Args:
+        url_base: URL base de la API.
+        limit: Registros por lote.
+        output_dir: Directorio donde se guardan los parquet.
+        max_attempts: Reintentos por lote.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    lotes_existentes = sorted(output_dir.glob("lote_*.parquet"))
+    if lotes_existentes:
+        lote = int(lotes_existentes[-1].stem.split("_")[1]) + 1
+        offset = lote * limit
+
+        try:
+            pl.read_parquet(lotes_existentes[-1])
+            logger.info(f"Retomando desde lote {lote:04d} | offset {offset}")
+        except Exception:
+            logger.warning("Ultimo lote corrupto, re-descargando desde ese punto")
+            lote -= 1
+            offset = lote * limit
+    else:
+        lote = 0
+        offset = 0
+        logger.info("Iniciando descarga desde cero")
 
     while True:
-        url_paginada = f"{url_base}?$limit={limite}&$offset={offset}"
-        print(f"⏳ Descargando bloque (Filas {offset} a {offset + limite})...")
-        
-        exito_bloque = False
-        
-        # Sistema de reintentos: Intentará 5 veces descargar el mismo bloque si hay un fallo
-        for intento in range(5):
-            try:
-                # El timeout evita que se quede colgado eternamente
-                respuesta = requests.get(url_paginada, headers=headers, timeout=60)
-                respuesta.raise_for_status()
-                
-                lote = respuesta.json()
-                exito_bloque = True
-                break  # ¡Funcionó! Rompemos el ciclo de reintentos
-                
-            except Exception as e:
-                print(f"   ⚠️ Falla en la conexión (Intento {intento + 1}/5): {e}")
-                print("   🔄 Esperando 5 segundos antes de reintentar...")
-                time.sleep(5)  # Pausa antes de volver a intentar
-                
-        # Si después de 5 intentos no se logró, abortamos el ciclo principal
-        if not exito_bloque:
-            print(f"\n❌ Abortando después de 5 intentos fallidos en el bloque {offset}.")
-            break
-            
-        # Si el lote llega vacío, significa que ya descargamos todos los datos que existen
-        if not lote:
-            print("✅ Descarga finalizada: Ya no hay más registros en el servidor.")
-            break
-            
-        todos_los_datos.extend(lote)
-        offset += limite
-        time.sleep(1)  # Pausa de cortesía para no saturar la API
+        batch = get_data_batch(
+            batch_number=lote,
+            url_base=url_base,
+            limit=limit,
+            offset=offset,
+            max_attempts=max_attempts,
+        )
 
-    print(f"\n💾 Guardando {len(todos_los_datos)} registros en tu disco duro...")
-    try:
-        with open(ruta_completa, 'w', encoding='utf-8') as archivo:
-            json.dump(todos_los_datos, archivo, ensure_ascii=False)
-        print(f"🎉 ¡Éxito total! Archivo maestro guardado en:\n   👉 {os.path.abspath(ruta_completa)}")
-    except Exception as e:
-         print(f"❌ Error al guardar el archivo: {e}")
+        if batch.is_empty():
+            break
 
-# ==========================================
-# EJECUCIÓN DIRECTA
-# ==========================================
+        batch.write_parquet(output_dir / f"lote_{lote:04d}.parquet")
+        offset += limit
+        lote += 1
+
+    logger.info(f"Descarga finalizada. {lote} lotes guardados en {output_dir}")
+
+
 if __name__ == "__main__":
-    carpeta_salida = os.path.join("data", "raw") 
-    descargar_todos_los_datos(carpeta_salida)
+    download_all()
