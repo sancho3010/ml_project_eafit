@@ -1,4 +1,4 @@
-# Reporte final — Predicción del puntaje Saber 11
+# Reporte final Predicción del puntaje Saber 11
 
 **Aprendizaje de Máquina Aplicado · Universidad EAFIT · 2026**
 **Equipo:** Patricia Arango · Santiago Higuita · Alexander Pelaez
