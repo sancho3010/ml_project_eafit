@@ -1,0 +1,366 @@
+{
+  "cole_sede_principal": {
+    "dtype": "object",
+    "domain": [
+      "S",
+      "N"
+    ],
+    "n_unique": 2
+  },
+  "cole_caracter": {
+    "dtype": "object",
+    "domain": [
+      "ACAD\u00c9MICO",
+      "T\u00c9CNICO/ACAD\u00c9MICO",
+      "T\u00c9CNICO",
+      "NO APLICA"
+    ],
+    "n_unique": 4
+  },
+  "fami_cuartoshogar": {
+    "dtype": "object",
+    "domain": [
+      "Tres",
+      "Cuatro",
+      "Dos",
+      "Seis",
+      "Uno",
+      "Diez o m\u00e1s",
+      "Cinco",
+      "Seis o mas",
+      "Ocho",
+      "Siete"
+    ],
+    "n_unique": 10
+  },
+  "fami_educacionpadre": {
+    "dtype": "object",
+    "domain": [
+      "T\u00e9cnica o tecnol\u00f3gica incompleta",
+      "Ninguno",
+      "Secundaria (Bachillerato) incompleta",
+      "Educaci\u00f3n profesional completa",
+      "T\u00e9cnica o tecnol\u00f3gica completa",
+      "Secundaria (Bachillerato) completa",
+      "Primaria incompleta",
+      "No sabe",
+      "Primaria completa",
+      "Educaci\u00f3n profesional incompleta",
+      "No Aplica",
+      "Postgrado"
+    ],
+    "n_unique": 12
+  },
+  "estu_tipodocumento": {
+    "dtype": "object",
+    "domain": [
+      "TI",
+      "CC",
+      "CR",
+      "CE",
+      "PEP",
+      "PPT"
+    ],
+    "n_unique": 6
+  },
+  "estu_fechanacimiento": {
+    "dtype": "object",
+    "domain": null,
+    "n_unique": 888
+  },
+  "fami_tienecomputador": {
+    "dtype": "object",
+    "domain": [
+      "Si",
+      "No"
+    ],
+    "n_unique": 2
+  },
+  "estu_genero": {
+    "dtype": "object",
+    "domain": [
+      "F",
+      "M"
+    ],
+    "n_unique": 2
+  },
+  "fami_tienelavadora": {
+    "dtype": "object",
+    "domain": [
+      "Si",
+      "No"
+    ],
+    "n_unique": 2
+  },
+  "fami_personashogar": {
+    "dtype": "object",
+    "domain": [
+      "Seis",
+      "9 o m\u00e1s",
+      "Cuatro",
+      "3 a 4",
+      "Cinco",
+      "5 a 6",
+      "Ocho",
+      "7 a 8",
+      "1 a 2",
+      "Siete",
+      "Una",
+      "Dos",
+      "Once",
+      "Tres",
+      "Nueve",
+      "Diez",
+      "Doce o m\u00e1s"
+    ],
+    "n_unique": 17
+  },
+  "estu_depto_presentacion": {
+    "dtype": "object",
+    "domain": [
+      "BOGOT\u00c1",
+      "CAUCA",
+      "SUCRE",
+      "RISARALDA",
+      "VALLE",
+      "ANTIOQUIA",
+      "TOLIMA",
+      "BOLIVAR",
+      "ATLANTICO",
+      "PUTUMAYO",
+      "META",
+      "HUILA",
+      "CUNDINAMARCA",
+      "BOYACA",
+      "NARI\u00d1O",
+      "NORTE SANTANDER",
+      "CALDAS",
+      "CESAR",
+      "GUAVIARE",
+      "CAQUETA",
+      "QUINDIO",
+      "SANTANDER",
+      "MAGDALENA",
+      "LA GUAJIRA",
+      "CASANARE",
+      "ARAUCA",
+      "CORDOBA",
+      "VICHADA",
+      "CHOCO",
+      "VAUPES",
+      "AMAZONAS"
+    ],
+    "n_unique": 31
+  },
+  "estu_depto_reside": {
+    "dtype": "object",
+    "domain": [
+      "BOGOT\u00c1",
+      "CAUCA",
+      "SUCRE",
+      "RISARALDA",
+      "VALLE",
+      "ANTIOQUIA",
+      "TOLIMA",
+      "BOLIVAR",
+      "ATLANTICO",
+      "PUTUMAYO",
+      "META",
+      "HUILA",
+      "CUNDINAMARCA",
+      "BOYACA",
+      "NARI\u00d1O",
+      "NORTE SANTANDER",
+      "CALDAS",
+      "CESAR",
+      "GUAVIARE",
+      "CAQUETA",
+      "QUINDIO",
+      "SANTANDER",
+      "MAGDALENA",
+      "LA GUAJIRA",
+      "CASANARE",
+      "ARAUCA",
+      "CORDOBA",
+      "VICHADA",
+      "AMAZONAS",
+      "CHOCO",
+      "VAUPES"
+    ],
+    "n_unique": 31
+  },
+  "cole_naturaleza": {
+    "dtype": "object",
+    "domain": [
+      "OFICIAL",
+      "NO OFICIAL"
+    ],
+    "n_unique": 2
+  },
+  "cole_calendario": {
+    "dtype": "object",
+    "domain": [
+      "A",
+      "B",
+      "OTRO"
+    ],
+    "n_unique": 3
+  },
+  "estu_mcpio_reside": {
+    "dtype": "object",
+    "domain": null,
+    "n_unique": 331
+  },
+  "periodo": {
+    "dtype": "object",
+    "domain": [
+      "20142",
+      "20224",
+      "20172",
+      "20211",
+      "20152",
+      "20194",
+      "20162",
+      "20171",
+      "20181",
+      "20221",
+      "20191",
+      "20201",
+      "20161",
+      "20151"
+    ],
+    "n_unique": 14
+  },
+  "cole_genero": {
+    "dtype": "object",
+    "domain": [
+      "MIXTO",
+      "FEMENINO",
+      "MASCULINO"
+    ],
+    "n_unique": 3
+  },
+  "fami_estratovivienda": {
+    "dtype": "object",
+    "domain": [
+      "Estrato 2",
+      "Estrato 1",
+      "Estrato 4",
+      "Estrato 3",
+      "Estrato 6",
+      "Sin Estrato",
+      "Estrato 5"
+    ],
+    "n_unique": 7
+  },
+  "cole_area_ubicacion": {
+    "dtype": "object",
+    "domain": [
+      "URBANO",
+      "RURAL"
+    ],
+    "n_unique": 2
+  },
+  "cole_bilingue": {
+    "dtype": "object",
+    "domain": [
+      "N",
+      "S"
+    ],
+    "n_unique": 2
+  },
+  "cole_mcpio_ubicacion": {
+    "dtype": "object",
+    "domain": null,
+    "n_unique": 351
+  },
+  "estu_mcpio_presentacion": {
+    "dtype": "object",
+    "domain": null,
+    "n_unique": 262
+  },
+  "fami_educacionmadre": {
+    "dtype": "object",
+    "domain": [
+      "Educaci\u00f3n profesional incompleta",
+      "Primaria incompleta",
+      "Secundaria (Bachillerato) completa",
+      "Educaci\u00f3n profesional completa",
+      "Postgrado",
+      "T\u00e9cnica o tecnol\u00f3gica incompleta",
+      "Primaria completa",
+      "Secundaria (Bachillerato) incompleta",
+      "No sabe",
+      "T\u00e9cnica o tecnol\u00f3gica completa",
+      "Ninguno",
+      "No Aplica"
+    ],
+    "n_unique": 12
+  },
+  "fami_tieneautomovil": {
+    "dtype": "object",
+    "domain": [
+      "Si",
+      "No"
+    ],
+    "n_unique": 2
+  },
+  "cole_jornada": {
+    "dtype": "object",
+    "domain": [
+      "MA\u00d1ANA",
+      "SABATINA",
+      "COMPLETA",
+      "NOCHE",
+      "TARDE",
+      "UNICA"
+    ],
+    "n_unique": 6
+  },
+  "fami_tieneinternet": {
+    "dtype": "object",
+    "domain": [
+      "Si",
+      "No"
+    ],
+    "n_unique": 2
+  },
+  "cole_depto_ubicacion": {
+    "dtype": "object",
+    "domain": [
+      "BOGOTA",
+      "CAUCA",
+      "SUCRE",
+      "RISARALDA",
+      "VALLE",
+      "ANTIOQUIA",
+      "TOLIMA",
+      "BOLIVAR",
+      "ATLANTICO",
+      "PUTUMAYO",
+      "META",
+      "HUILA",
+      "CUNDINAMARCA",
+      "BOYACA",
+      "NARI\u00d1O",
+      "NORTE SANTANDER",
+      "CALDAS",
+      "CESAR",
+      "GUAVIARE",
+      "CAQUETA",
+      "QUINDIO",
+      "SANTANDER",
+      "BOGOT\u00c1",
+      "MAGDALENA",
+      "LA GUAJIRA",
+      "CASANARE",
+      "ARAUCA",
+      "CORDOBA",
+      "VICHADA",
+      "AMAZONAS",
+      "CHOCO",
+      "VAUPES"
+    ],
+    "n_unique": 32
+  }
+}

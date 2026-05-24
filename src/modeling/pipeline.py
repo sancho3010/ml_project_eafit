@@ -18,6 +18,7 @@ El pipeline interno es siempre:
 from __future__ import annotations
 
 import os
+import json
 from typing import Any
 
 from catboost import CatBoostRegressor
@@ -42,11 +43,13 @@ from sklearn.metrics import (
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.pipeline import Pipeline
 from xgboost import XGBRegressor
+import xgboost as xgb
 
 from src.modeling.transformers import (
     DeterministicFeatureProcessor,
     GroupAggregatesTransformer,
 )
+
 
 
 class PipelineML:
@@ -385,6 +388,8 @@ class PipelineML:
 
     def explain(self, X_train, sample_size: int = 50_000) -> pd.DataFrame:
         """SHAP sobre una muestra de train (nunca sobre test)."""
+        logger.info('Using last version for execution...')
+
         if not hasattr(self, "best_pipeline"):
             raise ValueError("No hay champion. Corre fit_best() primero.")
 
@@ -398,11 +403,16 @@ class PipelineML:
         preproc = self.best_pipeline.named_steps["preprocessor"]
         model = self.best_pipeline.named_steps["model"]
 
-        # Transform sin LOO: coherente con predict().
         X_det = det.transform(X_sample)
         X_grp = gaggs.transform(X_det)
         X_transformed = preproc.transform(X_grp)
         feature_names = preproc.get_feature_names_out()
+
+        # Forzar todos los cores en XGBoost para acelerar SHAP.
+        if isinstance(model, XGBRegressor):
+            booster = model.get_booster()
+            booster.set_param({"nthread": -1})
+            model = booster
 
         logger.info(f"Calculando SHAP values sobre {len(X_sample):,} muestras...")
         explainer = shap.TreeExplainer(model)
@@ -422,6 +432,7 @@ class PipelineML:
             .sort_values("mean_abs_shap", ascending=False)
             .reset_index(drop=True)
         )
+
 
     def plot_shap_summary(self, max_display: int = 20, save_path: str | None = None) -> None:
         if not hasattr(self, "_shap_values"):
