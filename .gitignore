@@ -1,6 +1,9 @@
 # Data
 /data/
 
+# CatBoost training logs (generados automáticamente)
+catboost_info/
+
 # Mac OS-specific storage files
 .DS_Store
 
