@@ -1,11 +1,11 @@
-# Data Card — Resultados Saber 11 (ICFES)
+# Data Card Resultados Saber 11 (ICFES)
 
 ## Información General
 
 | Campo | Valor |
 |-------|-------|
 | **Nombre del dataset** | Resultados únicos Saber 11 |
-| **Fuente** | ICFES — Portal de Datos Abiertos del Gobierno de Colombia |
+| **Fuente** | ICFES (Portal de Datos Abiertos del Gobierno de Colombia) |
 | **URL** | https://www.datos.gov.co/resource/kgxf-xxbe |
 | **Formato de descarga** | JSON (API SODA2) → almacenado en Parquet |
 | **Fecha de descarga** | Abril 2026 |

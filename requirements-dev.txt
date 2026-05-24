@@ -1,0 +1,43 @@
+# Entorno de desarrollo: alineado con el de SageMaker donde se entrenó el champion (Python 3.12.13).
+# Cambios mayores en sklearn/xgboost/numpy invalidan el joblib serializado.
+
+ipython==8.29.0
+ipykernel==6.29.5
+jupyterlab==4.2.5
+loguru==0.7.2
+matplotlib==3.9.2
+notebook==7.2.2
+numpy==2.4.6
+pandas==2.2.3
+pytest==8.3.3
+python-dotenv==1.0.1
+ruff==0.7.1
+bandit==1.8.0
+scikit-learn==1.5.2
+tqdm==4.66.5
+typer==0.12.5
+requests==2.32.3
+
+# Data processing
+polars==1.40.1
+
+# Models
+lightgbm==4.6.0
+xgboost==3.2.0
+catboost==1.2.10
+
+# Hyperparameter tuning
+optuna==4.8.0
+
+# Interpretability
+shap==0.51.0
+
+# API serving
+fastapi==0.136.1
+uvicorn==0.46.0
+
+# Serialization
+joblib==1.5.3
+ipywidgets
+
+-e .

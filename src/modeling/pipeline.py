@@ -70,14 +70,10 @@ class PipelineML:
         use_gpu: bool = False,
         random_seed: int = 42,
     ) -> None:
-        # Auto-detección: paralelizar trials de Optuna y dejar el booster
-        # con varios cores. Folds del CV corren en serie (ver objective).
-        # Total workers = parallel_trials × cores_per_model ≈ cores físicos.
+        # Auto-detección: parallel_trials × cores_per_model ≈ cores físicos.
         n_cpus = os.cpu_count() or 4
         if parallel_trials is None:
-            # 1 trial paralelo en GPU (1 sola GPU compartida); en CPU,
-            # 2 trials por defecto da buen balance entre exploración y
-            # uso de los cores del booster.
+            # GPU: 1 trial (1 sola GPU). CPU: 2 trials por defecto.
             parallel_trials = 1 if use_gpu else min(2, n_cpus // 2)
 
         if cores_per_model is None:
@@ -276,10 +272,7 @@ class PipelineML:
 
             return float(np.mean(fold_scores))
 
-        # CPU: trials paralelos vía Optuna + folds en serie. Esto evita
-        # sobre-suscripción (parallel_trials × cores_per_model = total
-        # ≈ cores físicos). Folds en paralelo daba 3x más workers
-        # nominales y context switching costoso.
+        # CPU: trials paralelos vía Optuna + folds en serie. Evita sobre-suscripción.
         full_pipeline = self.build_pipeline(model_selected, params, model_type)
         scores = cross_val_score(
             full_pipeline,

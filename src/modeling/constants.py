@@ -131,9 +131,7 @@ NOMINAL_LOW_COLS: list[str] = [
     "periodo",
 ]
 
-# Columnas de alta cardinalidad. Por ahora vacío:
-# municipio se usa solo para el lookup de group aggregates, no entra al modelo
-# como categoría one-hot ni ordinal porque explotaría la dimensionalidad.
+# Alta cardinalidad: municipio se usa solo en el lookup de group aggregates, no entra al modelo.
 NOMINAL_HIGH_COLS: list[str] = []
 
 NUMERIC_COLS: list[str] = [

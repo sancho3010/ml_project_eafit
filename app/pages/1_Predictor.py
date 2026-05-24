@@ -98,6 +98,11 @@ with st.form("predictor"):
             ["Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "9 o más"],
             index=2,
         )
+        n_cuartos = st.selectbox(
+            "Cuartos en el hogar",
+            ["Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis o mas"],
+            index=2,
+        )
 
     with col3:
         internet = st.radio("Tiene internet en casa", ["Si", "No"], horizontal=True)
@@ -148,7 +153,7 @@ if submitted:
         "fami_educacionmadre": edu_madre,
         "fami_educacionpadre": edu_padre,
         "fami_personashogar": n_personas,
-        "fami_cuartoshogar": "Tres",
+        "fami_cuartoshogar": n_cuartos,
         "fami_tieneinternet": internet,
         "fami_tienecomputador": computador,
         "fami_tieneautomovil": automovil,

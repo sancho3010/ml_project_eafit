@@ -1,41 +1,13 @@
-ipython==8.29.0
-ipykernel==6.29.5
-jupyterlab==4.2.5
-loguru==0.7.2
-matplotlib==3.9.2
-notebook==7.2.2
-numpy==1.26.4
+# Dependencias mínimas para Streamlit Cloud (deploy ligero, ~250 MB).
+# Para desarrollo, tests y entrenamiento usar requirements-dev.txt.
+
+streamlit==1.40.1
+altair==6.1.0
 pandas==2.2.3
-pytest==8.3.3
-python-dotenv==1.0.1
-ruff==0.7.1
-bandit==1.8.0
-scikit-learn==1.5.2
-tqdm==4.66.5
-typer==0.12.5
-requests==2.32.3
-
-# Data processing
+numpy==2.4.6
 polars==1.40.1
-
-# Models
+joblib==1.5.3
+scikit-learn==1.5.2
 lightgbm==4.6.0
 xgboost==3.2.0
 catboost==1.2.10
-
-# Hyperparameter tuning
-optuna==4.8.0
-
-# Interpretability
-# shap >=0.47 requires numpy>=2; pin to 0.46.0 to stay compatible with numpy 1.26.4
-shap==0.46.0
-
-# API serving
-fastapi==0.136.1
-uvicorn==0.46.0
-
-# Serialization
-joblib==1.5.3
-ipywidgets
-
--e .
