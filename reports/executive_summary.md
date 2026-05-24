@@ -1,4 +1,4 @@
-# Resumen ejecutivo — Predicción Saber 11
+# Resumen ejecutivo Predicción Saber 11
 
 **Proyecto:** Predicción del puntaje global del examen Saber 11 (ICFES) a partir de variables socioeconómicas y de colegio.
 **Equipo:** Patricia Arango, Santiago Higuita, Alexander Pelaez · Universidad EAFIT · 2026
