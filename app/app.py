@@ -48,8 +48,8 @@ with col1:
     section_title("Predictor")
     st.write(
         "Estima el puntaje global Saber 11 de un estudiante a partir de "
-        "su contexto socioeconómico y características del colegio. "
-        "Devuelve un puntaje estimado y una banda de incertidumbre."
+        "su contexto socioeconómico y del colegio. Devuelve un puntaje "
+        "estimado y una banda de incertidumbre."
     )
     st.page_link("pages/1_Predictor.py", label="Ir al predictor")
 
@@ -57,7 +57,7 @@ with col2:
     section_title("Brechas")
     st.write(
         "Análisis de las brechas educativas en Colombia: por estrato, "
-        "educación de los padres, acceso a internet, área urbano/rural, "
+        "educación de padres, acceso a internet, área urbano-rural, "
         "naturaleza del colegio y departamento."
     )
     st.page_link("pages/2_Brechas.py", label="Ver el análisis")
@@ -65,7 +65,7 @@ with col2:
 with col3:
     section_title("Modelo")
     st.write(
-        "Detalles del champion: métricas en test holdout y validaciones "
+        "Detalles del champion: métricas en test holdout, validaciones "
         "de robustez, hiperparámetros, importancia de features (SHAP) "
         "y model card completo."
     )

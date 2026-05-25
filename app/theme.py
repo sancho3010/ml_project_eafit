@@ -84,5 +84,23 @@ a[data-testid="stPageLink-NavLink"] p {
     color: white !important;
     margin: 0 !important;
 }
+
+/* Igualar altura de las cards en la home: cada columna se comporta como
+   flex container de altura completa, y el page_link se empuja al fondo. */
+div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {
+    display: flex;
+    flex-direction: column;
+}
+div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]
+    > div[data-testid="stVerticalBlock"] {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]
+    a[data-testid="stPageLink-NavLink"] {
+    margin-top: auto;
+    align-self: flex-start;
+}
 </style>
 """
