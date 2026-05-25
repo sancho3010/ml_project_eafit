@@ -2,7 +2,7 @@
 # Para desarrollo, tests y entrenamiento usar requirements-dev.txt.
 
 streamlit==1.40.1
-altair==6.1.0
+altair==5.4.1
 pandas==2.2.3
 numpy==2.4.6
 polars==1.40.1
